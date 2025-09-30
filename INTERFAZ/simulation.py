@@ -48,7 +48,6 @@ class Simulation:
         self.reaction_text = self.font.render("Agent live reaction:", False, Color.BLANCO)
         self.memory_text = self.font.render("Nah, I'd Win:", False, Color.BLANCO)
         self.memory_text.set_alpha(0)
-        print(self.memory_text.get_width())
         self.walking_reaction = pygame.transform.scale(ResourceManager.image_load('agent_running.jpeg'), size).convert()
         self.thinking_reaction = pygame.transform.scale(ResourceManager.image_load('agent_think.png'), size).convert()
         self.win_reaction = pygame.transform.scale(ResourceManager.image_load('agent_win.jpeg'), size).convert()
@@ -94,7 +93,6 @@ class Simulation:
                 surface.blit(self.tile_sprites[self.map[x][y]], (46 + y * self.size_tile, 22 + x * self.size_tile))
         if self.running == 1:
             if self.agent.move():
-                print(self.iteracion)
                 self.start_ticks = pygame.time.get_ticks()
                 self.running = 2
                 if self.agent.rep_pos() and self.running == 2:
