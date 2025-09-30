@@ -41,7 +41,7 @@ class Simulation:
         self.fake_pos_draw = None
         self.agent_reaction_state = 0
         self.font = pygame.font.SysFont("Arial", 36)
-        self.reaction_text = self.font.render("Agent live reaction", False, Color.BLANCO)
+        self.reaction_text = self.font.render("Agent live reaction:", False, Color.BLANCO)
         self.walking_reaction = pygame.transform.scale(ResourceManager.image_load('agent_running.jpeg'), (472, 300)).convert()
         self.thinking_reaction = pygame.transform.scale(ResourceManager.image_load('agent_think.png'), (472, 300)).convert()
         self.win_reaction = pygame.transform.scale(ResourceManager.image_load('agent_win.jpeg'), (472, 300)).convert()
