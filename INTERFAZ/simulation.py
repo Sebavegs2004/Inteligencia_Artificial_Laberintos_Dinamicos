@@ -129,6 +129,7 @@ class Simulation:
             sound.set_volume(0.5)
             sound.play()
             self.fake_pos_draw = self.fake_pos
+            self.agent_reaction_state = 0
             self.agent.reset()
             self.reload_map()
             self.prize_activated = False
@@ -202,6 +203,7 @@ class Simulation:
         self.fake_pos = results[4].tolist()
         self.fake_pos = [tuple(x) for x in self.fake_pos]
         self.fake_pos_draw = self.fake_pos.copy()
+        self.agent_reaction_state = 0
 
     def load_GeneticAlgorithm(self, size, surface):
         surface.blit(ResourceManager.image_load('loading.png').convert_alpha(), (400,240))
