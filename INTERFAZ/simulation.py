@@ -431,7 +431,7 @@ class Simulation:
         self.fake_pos_draw = results[4]
         self.agent_reaction_state = 0
         if len(results[2]) >= 30 and results[1] == results[2][len(results[2]) - 1]:
-            self.dontgiveup_trigger = len(results[2]) - int(len(results[2])*0.3)
+            self.dontgiveup_trigger = len(results[2]) - int(len(results[2])*0.35)
         else:
             self.dontgiveup_trigger = -1
         self.trigger_memory = 0
