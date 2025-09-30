@@ -35,9 +35,9 @@ class MainMenu:
                 ResourceManager.music_load('tvtime.mp3')
 
     def handle_events(self, events):
-        if self.start_button.click_event(events):
+        if self.start_button.click_event(events) and self.activate == 0:
             return 'selection'
-        if self.exit_button.click_event(events):
+        if self.exit_button.click_event(events) and self.activate == 0:
             pygame.quit()
             sys.exit()
         if input_event.left_click(events):

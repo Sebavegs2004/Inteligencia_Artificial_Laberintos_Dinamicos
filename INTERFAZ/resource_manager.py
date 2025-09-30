@@ -29,7 +29,7 @@ class ResourceManager:
         get_music_path = os.path.join(ResourceManager.resources_folder, file_name)
         try:
             pygame.mixer.music.load(get_music_path)
-            pygame.mixer.music.set_volume(0.3)
+            pygame.mixer.music.set_volume(0.7)
             pygame.mixer.music.play(-1)  # bucle infinito
             print(f"Música {file_name} cargada y reproducida.")
         except pygame.error as e:
