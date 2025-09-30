@@ -11,7 +11,7 @@ class MainMenu:
         self.start_button = Button(576, 380, 'genericstart')
         self.exit_button = Button(585, 480, 'genericexit')
         self.menu_title = ResourceManager.image_load('title_mortadelasimulator.png').convert_alpha()
-        self.screamer = pygame.transform.scale(ResourceManager.image_load('vidal.jpg'), (1280, 720)).convert()
+        self.screamer = pygame.transform.scale(ResourceManager.image_load('san.jpeg'), (1280, 720)).convert()
         self.alpha = 255
         self.screamer.set_alpha(255)
         self.activate = 0
