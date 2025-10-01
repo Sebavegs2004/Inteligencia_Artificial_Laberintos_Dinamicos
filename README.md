@@ -59,8 +59,21 @@ python3 run.py
 
 ---
 
+## 🧬 Sugerencias para el genetico
+* Si el programa se congela es porque esta calculando aun 
+* Mientras mas grande mas tiempo tomara procesar 
+---
+
+## 🥚 Easter Eggs
+Hay dos easter eggs en el programa:
+* Easter egg 1 : haga click en el ojo azul
+* Easter egg 2 : Hay una probabilidad del 40% de que en mapas de tamaño sobre 15 se genere un evento
+
+
 ## 👨‍💻 Autores
 
-Sebastian Ignacio Vega Varela
-Cristobal Alonso Gonzales Cifuente
+Sebastian Ignacio Vega Varela\
+Cristobal Alonso Gonzales Cifuentes\
 Braian Alejandro Urra Bastías
+
+
