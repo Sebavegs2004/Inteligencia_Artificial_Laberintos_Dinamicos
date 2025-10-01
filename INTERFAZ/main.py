@@ -11,7 +11,7 @@ def main():
     screen_size = (1280, 720)
     screen = pygame.display.set_mode(screen_size)
     background = ResourceManager.image_load('menu_mortadela.png').convert()
-    imagen1 = ResourceManager.image_load('insano.png')
+    imagen1 = ResourceManager.image_load('premio.png')
     pygame.display.set_caption("Simulador Laberinto")
     pygame.display.set_icon(imagen1)
     pygame.mixer.init()

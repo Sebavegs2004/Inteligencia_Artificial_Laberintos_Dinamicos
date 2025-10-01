@@ -67,7 +67,7 @@ class Simulation:
         self.memory2.set_alpha(0)
         self.memory3.set_alpha(0)
         self.memory_spacing = int((720  - my*3)/4) 
-        self.prob_dontgiveup = 0.15
+        self.prob_dontgiveup = 1
         self.dontgiveup_trigger = -1
         self.trigger_memory = 0
         self.memory_speed = 2
