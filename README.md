@@ -67,7 +67,7 @@ python3 run.py
 ## 🥚 Easter Eggs
 Hay dos easter eggs en el programa:
 * Easter egg 1 : haga click en el ojo azul
-* Easter egg 2 : Hay una probabilidad del 40% de que en mapas de tamaño sobre 15 se genere un evento
+* Easter egg 2 : Hay una probabilidad del 40% de que en mapas de tamaño sobre 12 se genere un evento
 
 
 ## 👨‍💻 Autores
