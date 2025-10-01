@@ -10,7 +10,6 @@ class GameMode:
         self.dstar_button = Button(334, 328, 'dstar')
         self.genetic_button = Button(334 + 256 + 100, 328, 'genetico')
         self.exit_button = Button(1080, 600, 'exit_button')
-        self.screamer = ResourceManager.image_load('vidal.jpg')
         self.screamer_on = 0
         self.text = "INGRESE TAMAÑO"
         self.input_active = False

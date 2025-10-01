@@ -3,16 +3,6 @@ import numpy as np
 from constants import CellType
 
 def add_random_obstacles(grid, prob, start, goal, fake_goals):
-    """
-    Agrega obstáculos aleatorios al tablero (grid).
-    - grid: matriz numpy que representa el tablero.
-    - prob: probabilidad de que una celda se convierta en obstáculo.
-    - start: coordenadas de inicio.
-    - goal: coordenadas de la meta real.
-    - fake_goals: lista de metas falsas que no deben ser bloqueadas.
-
-    Retorna el grid modificado con obstáculos (1 = obstáculo, 0 = libre).
-    """
     size_x, size_y = grid.shape
     for x in range(size_x):
         for y in range(size_y):
@@ -52,21 +42,8 @@ def add_fake_goals(grid, exit_count, start, goal):
     return fake_goals
 
 def map_value(x):
-    """
-    Ecuacion de una recta que retorna la probabilidad de obstáculos en proporcion al tamaño de la grilla.
-
-    Parámetros
-    ----------
-    x : int
-        Tamaño de la grilla.
-
-    Retorna
-    -------
-    float
-        Probabilidad de obstáculo (entre 0.1 y 0.4).
-    """
     x1, x2 = 5, 50
-    y1, y2 = 0.4, 0.05
+    y1, y2 = 0.5, 0.05
     return y1 + (x - x1) * (y2 - y1) / (x2 - x1)
 
 # mapping: 0=Arriba,1=Derecha,2=Abajo,3=Izquierda
@@ -78,7 +55,7 @@ MOVES = {
 }
 
 class GeneticAlgorithm:
-    def __init__(self, size, population_size, num_generations, chromosome_length, mutation_rate, crossover_rate):
+    def __init__(self, size, population_size, num_generations, chromosome_length, mutation_rate, crossover_rate, num_goals, prob_muros, prob_mover):
         # Crear tablero
         self.size_board = size
         self.board = np.zeros((self.size_board, self.size_board), dtype=int)
@@ -89,10 +66,11 @@ class GeneticAlgorithm:
         while self.goal == self.start:
             self.goal = (random.randint(0, size - 1), random.randint(0, size - 1))
         # Añadir salidas falsas al tablero
-        self.fake_goals = add_fake_goals(self.board,  2, self.start, self.goal)
+        self.fake_goals = add_fake_goals(self.board,  num_goals-1, self.start, self.goal)
         # Añadir obstaculos al tablero
-        self.board = add_random_obstacles(self.board, map_value(size) , self.start, self.goal, self.fake_goals)
-
+        self.board = add_random_obstacles(self.board, prob_muros, self.start, self.goal, self.fake_goals)
+        self.prob_muros = prob_muros
+        self.prob_mover = prob_mover
 
         # Parametros del algoritmo genetico
         self.population_size = population_size           # Cantidad de cromosomas en cada generacion
@@ -156,7 +134,7 @@ class GeneticAlgorithm:
                     if (x,y) == self.goal:
                         reached = True
                         steps+=1
-                        board = move_obstacles(board, 0.2, (x, y), self.goal, self.fake_goals)
+                        board = move_obstacles(board, self.prob_mover, (x, y), self.goal, self.fake_goals)
                         boards.append(np.copy(board))
                         break
                     # Salida trampa, penalizamos
@@ -165,7 +143,7 @@ class GeneticAlgorithm:
             steps+=1
 
             # Mover obstaculos
-            board = move_obstacles(board, 0.2, (x, y), self.goal, self.fake_goals)
+            board = move_obstacles(board, self.prob_mover, (x, y), self.goal, self.fake_goals)
             boards.append(np.copy(board))
 
         return (x,y), path, penalties, steps, reached, boards
@@ -282,3 +260,50 @@ class GeneticAlgorithm:
 
         return (self.start, self.goal, best_path, self.boards, self.fake_goals)
 
+
+
+
+import time
+import csv
+
+if __name__ == "__main__":
+    print("ola")
+    sizes = {
+        25: 4,
+    }
+    prob_muros_list = [0.1, 0.3, 0.5]
+    prob_mover_list = [0.1, 0.25, 0.5, 0.9]
+    repeticiones = 50
+
+    for size, num_goals in sizes.items():
+        for prob_muros in prob_muros_list:
+            for prob_mover in prob_mover_list:
+                results = []
+                print(f"\n:small_blue_diamond: Ejecutando size={size}, goals={num_goals}, muros={prob_muros}, mover={prob_mover}")
+
+                for i in range(repeticiones):
+                    start_time = time.perf_counter()  # :arrow_left: mejor precisión
+                    population_size = 40
+                    num_generations = 80
+                    chromosome_length = 100
+                    mutation_rate = 0.07
+                    crossover_rate = 0.75
+
+                    ga = GeneticAlgorithm(size, population_size, num_generations,
+                                          chromosome_length, mutation_rate, crossover_rate, num_goals, prob_muros, prob_mover)
+
+                    start, goal, best_chromosome, boards, fake_goals = ga.run()
+
+                    end_time = time.perf_counter()
+                    execution_time = end_time - start_time
+                    results.append([execution_time, len(best_chromosome)])
+                    print(f"Ejecución {i+1}: Tiempo={execution_time:.6f}s, Jugadas={len(best_chromosome)}")
+
+                # Nombre de archivo único para cada combinación
+                filename = f"size{size}_muros{prob_muros}_mover{prob_mover}.csv"
+                with open(filename, mode="w", newline="") as file:
+                    writer = csv.writer(file)
+                    writer.writerow(["Tiempo (s)", "Jugadas"])
+                    writer.writerows(results)
+
+                print(f":white_check_mark: Resultados guardados en {filename}")
